@@ -1,0 +1,15 @@
+package org.drools.demo;
+unit StatusRequestUnit;
+
+rule "set rule"
+when
+    $statusRequest: /statusRequests[approved == null]
+    $partyCountry: PartyCountry(alternativeCodeVal=="SD") from $statusRequest.partyCountries
+then
+    System.out.println("Rule1 : " + $partyCountry);
+    modify( $statusRequest){ setApproved(true) };
+end
+
+query FindApproved
+    $statusRequest: /statusRequests[ approved == true ]
+end
